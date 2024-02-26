@@ -3,15 +3,36 @@ from django.views import generic
 from django.urls import reverse_lazy
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.views import LoginView, PasswordResetView, PasswordResetConfirmView
+from django.views.generic.edit import UpdateView 
+from django.contrib.auth import get_user_model
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 
-from users.forms import CustomSignUpForm, CustomLoginForm, CustomPasswordResetForm, CustomPasswordResetConfirmForm
+from users.forms import CustomSignUpForm, CustomLoginForm, CustomPasswordResetForm, CustomPasswordResetConfirmForm, EditProfileForm
 
 
 # Create your views here.
 
+
+
+class EditUserProfileView(LoginRequiredMixin, UpdateView):
+    # model = get_user_model()
+    form_class = EditProfileForm
+    template_name = "registration/edit_user_profile.html"
+    success_url = reverse_lazy("home")
+
+    def get_object(self, queryset=None):
+        """
+        Returns the request's user.
+        """
+        return self.request.user
+
+    # Then (unrelated, but for security)
+    # dispatch = login_required(UpdateView.dispatch)
+
 class CustomSignUpView(generic.CreateView):
     form_class = CustomSignUpForm #We're subclassing the generic class-based view CreateView in our SignUp class. We specify using the built-in UserCreationForm
-    success_url = reverse_lazy("home") #to redirect the user to the home page upon successful registration.
+    success_url = reverse_lazy("edit-user-profile")
     template_name = "registration/signup.html"
 
     # To autologin after successful signup

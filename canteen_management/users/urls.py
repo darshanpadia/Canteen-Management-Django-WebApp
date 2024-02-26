@@ -1,6 +1,12 @@
 from django.urls import path
 
-from .views import CustomSignUpView, CustomLoginView, CustomPasswordResetView, CustomPasswordResetConfirmView
+from .views import (
+    CustomSignUpView,
+    CustomLoginView,
+    CustomPasswordResetView,
+    CustomPasswordResetConfirmView,
+    EditUserProfileView
+)
 
 from django.contrib.auth import views as auth_views
 
@@ -14,6 +20,7 @@ from django.contrib.auth.views import (
 
 urlpatterns = [
     path('signup/', CustomSignUpView.as_view(), name='signup'),
+    path('edit-user-profile/', EditUserProfileView.as_view(), name='edit-user-profile'),
     path('login/', CustomLoginView.as_view(), name='login'),
     path('logout/', auth_views.LogoutView.as_view(next_page='/users/login'), name='logout'),
     path('password-reset/', CustomPasswordResetView.as_view(),name='password-reset'),

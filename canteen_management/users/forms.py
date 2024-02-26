@@ -9,6 +9,8 @@ from django.conf import settings
 
 from django.core.exceptions import ValidationError
 
+from django.forms import ModelForm
+
 class CustomUserCreationForm(UserCreationForm):
 
     class Meta:
@@ -38,8 +40,17 @@ class CustomSignUpForm(UserCreationForm):
     #     return get_user_model
 
 
+class EditProfileForm(ModelForm):
+    first_name = forms.CharField(max_length=30, widget=forms.TextInput(attrs={'placeholder' :'Enter your first name', 'style': 'width: 100%;', 'class': 'form-control'}))
+    last_name = forms.CharField(max_length=30, widget=forms.TextInput(attrs={'placeholder' :'Enter your last name', 'style': 'width: 100%;', 'class': 'form-control'}))
+    somaiya_id = forms.CharField(max_length=30, widget=forms.TextInput(attrs={'placeholder' :'Enter your Somaiya ID', 'style': 'width: 100%;', 'class': 'form-control'}))
+
+    class Meta:
+        model = get_user_model()
+        fields = ('first_name', 'last_name', 'somaiya_id')
+
 class CustomLoginForm(AuthenticationForm):
-    username = forms.CharField(
+    username = forms.EmailField(
         max_length=100,
         required=True,
         widget=forms.TextInput(
@@ -54,7 +65,7 @@ class CustomLoginForm(AuthenticationForm):
     )
     password = forms.CharField(
         required=True,
-        widget=forms.TextInput(
+        widget=forms.PasswordInput(
             attrs={
                 "class": "form-control",
                 "type": "password",
