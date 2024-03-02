@@ -9,7 +9,7 @@
         <div class="col-md-6">
             <div class="card">
                 <div class="card-header">
-                  {% if request.GET.source == 'home' %}
+                  {% if request.GET.source == 'profile' %}
                       <h3 class="text-center">Edit Profile</h3>
                   {% else %}
                       <h3 class="text-center">Setup Profile</h3>
@@ -32,7 +32,7 @@
                     {% endfor %}
                     <div class="form-buttons "> 
 						            <input type="submit" value="Send" class="btn btn-primary">
-                        {% if request.GET.source == 'home' %}
+                        {% if request.GET.source == 'profile' %}
                               <a href="{%url 'login' %}"  class="btn btn-secondary"  role="button">Cancel</a>
                         {% else %}
                               <a href="{%url 'login' %}"  class="btn btn-secondary"  role="button">Skip</a> 

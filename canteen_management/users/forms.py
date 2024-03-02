@@ -41,13 +41,15 @@ class CustomSignUpForm(UserCreationForm):
 
 
 class EditProfileForm(ModelForm):
-    first_name = forms.CharField(max_length=30, widget=forms.TextInput(attrs={'placeholder' :'Enter your first name', 'style': 'width: 100%;', 'class': 'form-control'}))
-    last_name = forms.CharField(max_length=30, widget=forms.TextInput(attrs={'placeholder' :'Enter your last name', 'style': 'width: 100%;', 'class': 'form-control'}))
-    somaiya_id = forms.CharField(max_length=30, widget=forms.TextInput(attrs={'placeholder' :'Enter your Somaiya ID', 'style': 'width: 100%;', 'class': 'form-control'}))
-
     class Meta:
         model = get_user_model()
-        fields = ('first_name', 'last_name', 'somaiya_id')
+        fields = ('profile_pic', 'first_name', 'last_name', 'somaiya_id')
+        widgets = {
+            'first_name': forms.TextInput (attrs={'placeholder' :'Enter your first name', 'style': 'width: 100%;', 'class': 'form-control'}),
+            'last_name': forms.TextInput (attrs={'placeholder' :'Enter your last name', 'style': 'width: 100%;', 'class': 'form-control'}),
+            'somaiya_id': forms.TextInput (attrs={'placeholder' :'Enter your Somaiya ID', 'style': 'width: 100%;', 'class': 'form-control'})
+        }
+
 
 class CustomLoginForm(AuthenticationForm):
     username = forms.EmailField(

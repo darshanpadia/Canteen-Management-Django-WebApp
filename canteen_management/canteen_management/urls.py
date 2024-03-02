@@ -17,12 +17,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.views.generic.base import TemplateView
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-
     path('users/', include('users.urls')), #above our included Django auth app. Django will look top to bottom for URL patterns, so when it sees a URL route within our users app that matches one in the built-in auth app, it will choose the new users app route first.
     path("", TemplateView.as_view(template_name="home.html"), name="home"),  #To display the homepage. can also create dedicated pages app for this
-    
-
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

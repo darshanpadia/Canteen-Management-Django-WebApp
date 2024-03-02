@@ -10,11 +10,13 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     date = models.DateTimeField(default=timezone.now)
-    first_name = models.CharField(_('first name'), max_length=30, blank=True)
-    last_name = models.CharField(_('last name'), max_length=30, blank=True)
+    first_name = models.CharField(_('first name'), max_length=30, blank=True, null=True)
+    last_name = models.CharField(_('last name'), max_length=30, blank=True, null=True)
     somaiya_id = models.CharField(_('somaiya id'),unique=True, max_length=10, blank=True, null=True, default=None)
+    profile_pic = models.ImageField(upload_to="profile_pics/", default = 'profile_pics/blank-profile-pic.jpg')
+    image_url = models.URLField(_('image URL'), blank=True, null=True)
+    REQUIRED_FIELDS = [] 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = []
 
     objects = CustomUserManager()
 

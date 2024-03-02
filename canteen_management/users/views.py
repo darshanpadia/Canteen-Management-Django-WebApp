@@ -7,6 +7,9 @@ from django.views.generic.edit import UpdateView
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib import messages
+from .models import CustomUser
+from django.shortcuts import redirect, render
 
 from users.forms import CustomSignUpForm, CustomLoginForm, CustomPasswordResetForm, CustomPasswordResetConfirmForm, EditProfileForm
 
@@ -16,7 +19,6 @@ from users.forms import CustomSignUpForm, CustomLoginForm, CustomPasswordResetFo
 
 
 class EditUserProfileView(LoginRequiredMixin, UpdateView):
-    # model = get_user_model()
     form_class = EditProfileForm
     template_name = "registration/edit_user_profile.html"
     success_url = reverse_lazy("home")
@@ -26,9 +28,21 @@ class EditUserProfileView(LoginRequiredMixin, UpdateView):
         Returns the request's user.
         """
         return self.request.user
+    
+    def form_valid(self, form):
+        messages.success(self.request, 'Profile Updated Successfully')
+        return super().form_valid(form)
 
-    # Then (unrelated, but for security)
-    # dispatch = login_required(UpdateView.dispatch)
+    def get_success_url(self):
+        return self.success_url
+    
+class ViewUserProfileView(LoginRequiredMixin, generic.DetailView):
+    model = CustomUser
+    template_name = "registration/view_user_profile.html"
+    context_object_name = "user"
+
+    def get_object(self, queryset=None):
+        return self.request.user
 
 class CustomSignUpView(generic.CreateView):
     form_class = CustomSignUpForm #We're subclassing the generic class-based view CreateView in our SignUp class. We specify using the built-in UserCreationForm
@@ -37,11 +51,11 @@ class CustomSignUpView(generic.CreateView):
 
     # To autologin after successful signup
     def form_valid(self, form):
-        valid = super(CustomSignUpView, self).form_valid(form)
+        response = super(CustomSignUpView, self).form_valid(form)
         username, password = form.cleaned_data.get('username'), form.cleaned_data.get('password1')
         user = form.save()
         login(self.request, user)
-        return valid
+        return response
 
 class CustomLoginView(LoginView):
     form_class = CustomLoginForm
