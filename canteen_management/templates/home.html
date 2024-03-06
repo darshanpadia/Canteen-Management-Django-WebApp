@@ -7,6 +7,7 @@
     <p><a href="{% url 'view-user-profile' %}">Profile</a></p>
     <p><a href="{% url 'logout' %}">Log Out</a></p>
     <p><a href="">Reset Password</a></p>
+    <a href="{% url 'canteen_menu' %}">View Canteen Menu</a>
 {% else %}
     <p>You are not logged in</p>
     <a href="{% url 'login' %}">Login</a>
