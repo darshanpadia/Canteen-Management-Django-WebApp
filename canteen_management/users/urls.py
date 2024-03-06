@@ -19,6 +19,8 @@ from django.contrib.auth.views import (
     PasswordResetCompleteView
 )
 
+app_name = 'users'  # Define the namespace for your app
+
 urlpatterns = [
     path('signup/', CustomSignUpView.as_view(), name='signup'),
     path('edit-user-profile/', EditUserProfileView.as_view(), name='edit-user-profile'),

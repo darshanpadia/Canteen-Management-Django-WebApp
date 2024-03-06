@@ -4,12 +4,12 @@
 {% block content %}
 {% if user.is_authenticated %}
     Hi {{ user.name }}!
-    <p><a href="{% url 'view-user-profile' %}">Profile</a></p>
-    <p><a href="{% url 'logout' %}">Log Out</a></p>
-    <p><a href="">Reset Password</a></p>
+    <p><a href="{% url 'users:view-user-profile' %}">Profile</a></p>
+    <p><a href="{% url 'users:logout' %}">Log Out</a></p>
+    <p><a href="{% url 'users:password-reset' %}">Reset Password</a></p>
     <a href="{% url 'canteen_menu' %}">View Canteen Menu</a>
 {% else %}
     <p>You are not logged in</p>
-    <a href="{% url 'login' %}">Login</a>
+    <a href="{% url 'users:login' %}">Login</a>
 {% endif %}
 {% endblock %}

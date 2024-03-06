@@ -33,9 +33,9 @@
                     <div class="form-buttons "> 
 						            <input type="submit" value="Send" class="btn btn-primary">
                         {% if request.GET.source == 'profile' %}
-                              <a href="{%url 'login' %}"  class="btn btn-secondary"  role="button">Cancel</a>
+                              <a href="{%url 'users:login' %}"  class="btn btn-secondary"  role="button">Cancel</a>
                         {% else %}
-                              <a href="{%url 'login' %}"  class="btn btn-secondary"  role="button">Skip</a> 
+                              <a href="{%url 'users:login' %}"  class="btn btn-secondary"  role="button">Skip</a> 
                         {% endif %}
                     </div>
                   </form>
