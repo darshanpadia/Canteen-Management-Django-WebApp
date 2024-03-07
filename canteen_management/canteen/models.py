@@ -2,7 +2,7 @@ from django.db import models
 
 # Create your models here.
 
-class Product(models.Model):
+class CanteenProduct(models.Model):
     product_image = models.ImageField(upload_to="product_images/", default = 'product_images/blank-product.png')
     name = models.CharField(max_length=255)
     price = models.IntegerField()

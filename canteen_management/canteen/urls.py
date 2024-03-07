@@ -3,5 +3,5 @@ from .views import CanteenMenuView
 
 
 urlpatterns = [
-    path('canteen/', CanteenMenuView.as_view(), name='canteen_menu'),
+    path('menu/', CanteenMenuView.as_view(), name='canteen_menu'),
 ]
