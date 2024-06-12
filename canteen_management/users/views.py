@@ -46,7 +46,7 @@ class ViewUserProfileView(LoginRequiredMixin, generic.DetailView):
 
 class CustomSignUpView(generic.CreateView):
     form_class = CustomSignUpForm #We're subclassing the generic class-based view CreateView in our SignUp class. We specify using the built-in UserCreationForm
-    success_url = reverse_lazy("edit-user-profile")
+    success_url = reverse_lazy("users:edit-user-profile")
     template_name = "registration/signup.html"
 
     # To autologin after successful signup
@@ -62,6 +62,10 @@ class CustomLoginView(LoginView):
     redirect_authenticated_user: bool = True
     success_url = reverse_lazy("home")
     template_name: str = "registration/login.html"
+
+    def form_invalid(self, form):
+        print(form.errors)  # Add this line to print form errors to the console
+        return self.render_to_response(self.get_context_data(form=form))
 
 # def logout_view(request):
 #     logout(request)

@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+    Cart - Canteen
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h1>Cart</h1>
+            <ul class="list-group">
+                {% for item in cart.cartitem_set.all %}
+                    <li class="list-group-item d-flex align-items-center">
+                        <img src="{{ item.canteen_product.product_image.url }}" alt="{{ item.canteen_product.name }}" style="max-width: 50px;">
+                        <div class="flex-grow-1">
+                            <div>
+                                <div>{{ item.canteen_product.name }}</div>
+                                <div>{{ item.canteen_product.price }}</div>
+                            </div>
+                        </div>
+                        <div>
+                            <button class="btn btn-outline-primary btn-sm" onclick="decreaseQuantity('{{ item.id }}')">-</button>
+                            <span id="quantity_{{ item.id }}">{{ item.quantity }}</span>
+                            <button class="btn btn-outline-primary btn-sm" onclick="increaseQuantity('{{ item.id }}')">+</button>
+                        </div>
+                        <div>
+                            <span id="total_cost_{{ item.id }}">{{ item.item_total }}</span>
+                        </div>
+                        <div class="row justify-content-end">
+                            <div class="col-auto">
+                                <a href="{% url 'remove_from_cart' item.id %}" class="btn btn-danger btn-sm">X</a>
+                            </div>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+            <a href="#" class="btn btn-primary mt-3">Proceed to Checkout</a>
+        </div>
+    </div>
+</div>
+
+<script>
+    function increaseQuantity(itemId) {
+        var quantityElement = document.getElementById('quantity_' + itemId);
+        var quantity = parseInt(quantityElement.textContent);
+        quantityElement.textContent = quantity + 1;
+        // You may need to send an AJAX request to update the quantity in the backend.
+    }
+
+    function decreaseQuantity(itemId) {
+        var quantityElement = document.getElementById('quantity_' + itemId);
+        var quantity = parseInt(quantityElement.textContent);
+        if (quantity > 1) {
+            quantityElement.textContent = quantity - 1;
+            // You may need to send an AJAX request to update the quantity in the backend.
+        }
+    }
+</script>
+{% endblock %}

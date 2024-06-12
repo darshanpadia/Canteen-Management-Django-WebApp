@@ -14,7 +14,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     first_name = models.CharField(_('first name'), max_length=30, blank=True, null=True)
     last_name = models.CharField(_('last name'), max_length=30, blank=True, null=True)
     somaiya_id = models.CharField(_('somaiya id'),validators=[RegexValidator(regex='^.{10}$', message='Length has to be 10', code='nomatch')],unique=True, max_length=10, blank=True, null=True, default=None)
-    profile_pic = models.ImageField(upload_to="profile_pics/", default = 'profile_pics/blank-product.png')
+    profile_pic = models.ImageField(upload_to="profile_pics/", default = 'profile_pics/blank-profile-pic.jpg')
     image_url = models.URLField(_('image URL'), blank=True, null=True)
     REQUIRED_FIELDS = [] 
     USERNAME_FIELD = 'email'

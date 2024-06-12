@@ -11,6 +11,8 @@ from django.core.exceptions import ValidationError
 
 from django.forms import ModelForm
 
+from django.contrib.auth import authenticate
+
 class CustomUserCreationForm(UserCreationForm):
 
     class Meta:
@@ -52,30 +54,40 @@ class EditProfileForm(ModelForm):
 
 
 class CustomLoginForm(AuthenticationForm):
-    username = forms.EmailField(
-        max_length=100,
-        required=True,
-        widget=forms.TextInput(
-            attrs={
-                # "class": "block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-500 bg-white border rounded-md bg-gray-800 border-gray-600 placeholder-gray-400 focus:border-blue-400 focus:border-blue-300 focus:ring-opacity-40 focus:outline-none focus:ring focus:ring-blue-300",
-                "class": "form-control",
-                "placeholder": "Username",
-                "type": "",
-                'style': 'width: 100%',
-            }
-        ),
-    )
-    password = forms.CharField(
-        required=True,
-        widget=forms.PasswordInput(
-            attrs={
-                "class": "form-control",
-                "type": "password",
-                "placeholder": "Password",
-                'style': 'width: 100%',
-            }
-        ),
-    )
+    username = forms.EmailField(max_length=254, help_text="Required. Enter a valid email address", widget=forms.EmailInput(attrs={'placeholder' :'Email', 'style': 'width: 100%;', 'class': 'form-control'}))
+    password = forms.CharField(max_length=64, label='Password', widget=forms.PasswordInput(attrs={'placeholder' :'Password', 'style': 'width: 100%;', 'class': 'form-control'}))   # to remove help text from password1 field
+    
+    class Meta:
+        model = get_user_model()
+        fields = ('username', 'password')
+
+
+    # username = forms.EmailField(
+    #     max_length=100,
+    #     required=True,
+    #     widget=forms.TextInput(
+    #         attrs={
+    #             # "class": "block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-500 bg-white border rounded-md bg-gray-800 border-gray-600 placeholder-gray-400 focus:border-blue-400 focus:border-blue-300 focus:ring-opacity-40 focus:outline-none focus:ring focus:ring-blue-300",
+    #             "class": "form-control",
+    #             "placeholder": "Username",
+    #             "type": "",
+    #             'style': 'width: 100%',
+    #         }
+    #     ),
+    # )
+    # password = forms.CharField(
+    #     required=True,
+    #     widget=forms.PasswordInput(
+    #         attrs={
+    #             "class": "form-control",
+    #             "type": "password",
+    #             "placeholder": "Password",
+    #             'style': 'width: 100%',
+    #         }
+    #     ),
+    # )
+
+    
 
 class CustomPasswordResetForm(PasswordResetForm):
     email = forms.EmailField(max_length=30,help_text='Required. Inform a valid email address.', widget=forms.EmailInput(attrs={'autofocus': 'autofocus','placeholder' :'Email', 'style': 'width: 100%;', 'class': 'form-control'}))

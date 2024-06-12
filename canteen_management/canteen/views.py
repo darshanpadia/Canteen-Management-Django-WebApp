@@ -9,7 +9,7 @@ from .models import CanteenProduct
 class CanteenMenuView(ListView):
     model = CanteenProduct
     template_name = 'store_templates/canteen_menu.html'
-    context_object_name = 'products'
+    context_object_name = 'canteen_products'
 
     def get_queryset(self):
         return CanteenProduct.objects.filter(is_available=True)
