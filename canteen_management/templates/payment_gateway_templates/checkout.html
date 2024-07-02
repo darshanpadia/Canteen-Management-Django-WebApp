@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+    Checkout - Canteen
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-lg-8">
+            <h1 class="mb-4">Checkout</h1>
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">Order Summary</h5>
+                </div>
+                <ul class="list-group list-group-flush">
+                    {% for item in cart.cartitem_set.all %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <div class="d-flex align-items-center">
+                                <img src="{{ item.canteen_product.product_image.url }}" alt="{{ item.canteen_product.name }}" class="img-fluid rounded me-3" style="width: 60px; height: 60px; object-fit: cover;">
+                                <div>
+                                    <h6 class="mb-0">{{ item.canteen_product.name }}</h6>
+                                    <small>Quantity: {{ item.quantity }}</small>
+                                </div>
+                            </div>
+                            <span>₹{{ item.item_total }}</span>
+                        </li>
+                    {% endfor %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center fw-bold">
+                        <span>Grand Total</span>
+                        <span>₹{{ cart.get_total }}</span>
+                    </li>
+                </ul>
+            </div>
+
+            <h3 class="mb-3">Select Payment Method</h3>
+            <div class="list-group">
+                <form method="post">
+                    {% csrf_token %}
+                    <button type="submit" name="payment_method" value="credit_card" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                        <div>
+                            <i class="bi bi-credit-card fs-4 me-2"></i>
+                            UPI
+                        </div>
+                        <span class="badge bg-primary rounded-pill">Most Popular</span>
+                    </button>
+                </form>
+                <form method="post">
+                    {% csrf_token %}
+                    <button type="submit" name="payment_method" value="paypal" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                        <div>
+                            <i class="bi bi-paypal fs-4 me-2"></i>
+                            Credit/Debit Card
+                        </div>
+                        <span class="badge bg-secondary rounded-pill">Fast & Secure</span>
+                    </button>
+                </form>
+                <form method="post">
+                    {% csrf_token %}
+                    <button type="submit" name="payment_method" value="cash_on_delivery" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                        <div>
+                            <i class="bi bi-cash fs-4 me-2"></i>
+                            Cash on Delivery
+                        </div>
+                        <span class="badge bg-success rounded-pill">Pay Later</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Order Details</h5>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <strong>Items:</strong> {{ cart.cartitem_set.count }}
+                    </li>
+                    <li class="list-group-item">
+                        <strong>Grand Total:</strong> ₹{{ cart.get_total }}
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

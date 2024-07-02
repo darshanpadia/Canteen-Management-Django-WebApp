@@ -25,5 +25,5 @@ urlpatterns = [
     path('users/', include('users.urls')), #above our included Django auth app. Django will look top to bottom for URL patterns, so when it sees a URL route within our users app that matches one in the built-in auth app, it will choose the new users app route first.
     path("", TemplateView.as_view(template_name="home.html"), name="home"),  #To display the homepage. can also create dedicated pages app for this
     path('canteen/', include('canteen.urls')),
-    path('cart/', include('cart.urls'))
+    path('cart/', include('cart.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
